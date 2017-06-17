@@ -26,37 +26,37 @@ namespace ParkingValidation
 					var firstAndLast = first.Concat(plateNums.Skip(6).Take(2).Select(x => (int)x).ToList()).ToList();
 					var middle = plateNums.Skip(2).Take(4).Select(x => (int)x).ToList();
 					bool isValid = true;
-					for (int j = 0; j < 4; j++)
-					{
-						if (firstAndLast[j] < 65 || firstAndLast[j] > 90 ||
-							middle[j] < 48 || middle[j] > 57 || plateNums.Length != 8)
-						{
-							Console.WriteLine($"ERROR: invalid license plate {plate}");
-							isValid = false;
-							break;
-						}
-					}
-					if (!isValid)
-					{
-						continue;
-					}
-
+					
+					
 					if (!namePlate.ContainsKey(user) && !namePlate.ContainsValue(plate))
 					{
-						namePlate[user] = "";
-						namePlate[user] = plate;
-						Console.WriteLine($"{user} registered {plate} successfully");
+						for (int j = 0; j < 4; j++)
+						{
+							if (firstAndLast[j] < 65 || firstAndLast[j] > 90 ||
+								middle[j] < 48 || middle[j] > 57 || plateNums.Length != 8)
+							{
+								Console.WriteLine($"ERROR: invalid license plate {plate}");
+								isValid = false;
+								break;
+							}
+						}
+						if (isValid)
+						{
+							namePlate[user] = "";
+							namePlate[user] = plate;
+							Console.WriteLine($"{user} registered {plate} successfully");
+						}
 					}
 					else if (namePlate.ContainsKey(user))
 					{
-						Console.WriteLine($"ERROR: already registered with plate number {plate}");
+						Console.WriteLine($"ERROR: already registered with plate number {namePlate[user]}");
 					}
-					else
+					else if (namePlate.ContainsValue(plate))
 					{
 						Console.WriteLine($"ERROR: license plate {plate} is busy");
 					}
 				}
-				else
+				else if (command == "unregister")
 				{
 					if (!namePlate.ContainsKey(user))
 					{
