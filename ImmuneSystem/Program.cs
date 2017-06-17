@@ -39,7 +39,7 @@ namespace ImmuneSystem
 					return;
 				}
 								
-				Console.WriteLine($"{command} defeated in {timeToDefeat/60}m {timeToDefeat%60}s");
+				Console.WriteLine($"{command} defeated in {timeToDefeat/60}m {timeToDefeat%60}s.");
 				Console.WriteLine($"Remaining health: {currentHealth}");
 				currentHealth = (int)(currentHealth * 1.2);
 				if (currentHealth > startHealth)
